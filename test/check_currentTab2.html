@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css" media="screen">
+	.popup {
+		height: 300px;
+		width: 300px;
+		margin: 0 auto;
+		border: 1px solid;
+		box-shadow: 7px 7px 167px 1px #585858;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		margin-top: 100px;
+		background: #f1f1f1;
+		font-family: cursive;
+	}
+	</style>
+</head>
+
+<body>
+	<center>
+	<h1>Sample popup</h1>
+	<button id="btn">click me</button>
+	</center>
+
+	<div class="popup">
+	<p>I am a PopUp</p>
+	</div>
+	<script>
+	let btn = document.querySelector("#btn");
+	let pop = document.querySelector(".popup");
+
+	btn.addEventListener("click", () => {
+		pop.style.display = "flex";
+	});
+
+	document.addEventListener("visibilitychange", () => {
+		pop.style.display = "none";
+	});
+	</script>
+</body>
+</html>

@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
 
-  <title>Mexant - Financial HTML5 Template</title>
+  <title id="online">Mexant-</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'chat/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -56,9 +56,9 @@ https://templatemo.com/tm-574-mexant
                 <ul class="sub-menu">
                   <li><a href="about-us.html">About Us</a></li>
                   <li><a href="our-services.html">Our Services</a></li>
-                 </ul>
+                </ul>
               </li>
-              <li><a href="/logout/" >Logout</a></li>
+              <li><a href="/logout/">Logout</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -194,8 +194,8 @@ https://templatemo.com/tm-574-mexant
             <p>Do not be hesitated to contact us. if you have any question or concern about our templates.
               I will provide good condition for you. You can discuss here with me and input your words what you want. I
               am ready for you all the time. Your words will display below.
-              <div id="display">
-              </div>
+            <div id="display">
+            </div>
             </p>
           </div>
         </div>
@@ -205,8 +205,8 @@ https://templatemo.com/tm-574-mexant
             <h4>Fully Customizable</h4>
             <p>If you have any idea or suggestion about new business, feel free to let us know.
               I will offer you good conditions. Everything is upto your descision. You can see my words below.
-              <div id="display-admin">
-              </div>
+            <div id="display-admin">
+            </div>
             </p>
           </div>
         </div>
@@ -217,16 +217,18 @@ https://templatemo.com/tm-574-mexant
     <div class="container">
       <div class="row">
 
-          <form id="post-form">
-            {% csrf_token %}
-            <input type="hidden" name="username" id="username" value="{{username}}"/>
-            <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
-            <input type="text" autocomplete="off" name="message" id="message" width="100px" style="width: 600px !important;"/>
-            <input style="float:right;background-color: #4CAF50;padding: 10px 20px;border-radius: 8px;color:white" type="submit" value="Contact Me" id="submit_btn">
-          </form>
+        <form id="post-form">
+          {% csrf_token %}
+          <input type="hidden" name="username" id="username" value="{{username}}" />
+          <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}" />
+          <input type="text" autocomplete="off" name="message" id="message" width="100px"
+            style="width: 600px !important;" />
+          <input style="float:right;background-color: #4CAF50;padding: 10px 20px;border-radius: 8px;color:white"
+            type="submit" value="Contact Me" id="submit_btn">
+        </form>
 
-        
-            
+
+
       </div>
     </div>
   </section>
@@ -236,12 +238,12 @@ https://templatemo.com/tm-574-mexant
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
           <div class="section-heading">
-              {% comment %} {%if request.user.is_authenticated %}
-                <div id="display-admin">
-                </div>
-              {% else %}
-                <div></div>  
-              {% endif %} {% endcomment %}
+            {% comment %} {%if request.user.is_authenticated %}
+            <div id="display-admin">
+            </div>
+            {% else %}
+            <div></div>
+            {% endif %} {% endcomment %}
             <h6>About Us</h6>
             <h4>Know Us Better</h4>
           </div>
@@ -605,76 +607,105 @@ https://templatemo.com/tm-574-mexant
   </script>
 </body>
 <script>
-  $(document).ready(function(){
-  
-  setInterval(function(){
+  $(document).ready(function () {
+    var count = 0
+    // var tabInfo = browser.tabs.getCurrent()
+    setInterval(function () {
       $.ajax({
-          type: 'GET',
-          url : "/chat/getMessages/{{room}}/",
-          success: function(response){
-              // console.log(response.messages);
-              var msg=response.messages
+        type: 'GET',
+        url: "/chat/getMessages/{{room}}/",
+        success: function (response) {
+          // console.log(response.messages);
+          var msg = response.messages
 
-              var newmsg=msg.splice(msg.length-5, msg.length-1)
-              console.log(newmsg)
-  
-              $("#display-admin").empty();
-              
-              for (var key in newmsg)
-              {   
-                if (newmsg[key].user==='admin'){
-                var temp="<div class='container darker'>"+newmsg[key].user+": "+newmsg[key].value+"</div>";
-                $("#display-admin").append(temp);}
-              }
-              $("#display").empty();
-              for (var key in newmsg)
-              {   if (newmsg[key].user!=='admin'){
-                var temp="<div class='container darker'>"+newmsg[key].user+": "+newmsg[key].value+"</div>";
-                $("#display").append(temp);}
-              }
+          var newmsg = msg.splice(msg.length - 5, msg.length - 1)
+          console.log(newmsg)
 
-              $("#display-state").empty();
-              {
-              $("#display-state").append(response.online);
-              }              
-            
-          },
-          error: function(response){
-              alert('An error occured')
+          count++;
+          console.log(count)
+
+          $("#display-admin").empty();
+          for (var key in newmsg) {
+            if (newmsg[key].user === 'admin') {
+              var temp = "<div class='container darker'>" + newmsg[key].user + ": " + newmsg[key].value + "</div>";
+              $("#display-admin").append(temp);
+            }
           }
+          $("#display").empty();
+          for (var key in newmsg) {
+            if (newmsg[key].user !== 'admin') {
+              var temp = "<div class='container darker'>" + newmsg[key].user + ": " + newmsg[key].value + "</div>";
+              $("#display").append(temp);
+            }
+          }
+
+          $("#display-state").empty();
+          {
+            $("#display-state").append(response.online);
+          }
+
+          // $("#online").empty();
+          {
+
+            if (response.online === 'Offline') { $("#online").text("Mexant-" + response.online); }
+            else if (response.online === 'Online') {
+              if (!document.hidden) {
+                $("#online").text("Mexant-" + response.online);
+              } else {
+                
+                if (count % 2 == 0) {
+                  $("#online").text("Mexant-" + response.online);
+                } else {
+                  $("#online").text("Hi");
+                }
+              }
+
+            }
+          }
+
+
+        },
+        error: function (response) {
+          alert('An error occured')
+        }
       });
-  },1000);
+    }, 1000);
   })
-  </script>
+</script>
 <script type="text/javascript">
-  $(document).on('submit','#post-form',function(e){
+  $(document).on('submit', '#post-form', function (e) {
     e.preventDefault();
 
     $.ajax({
-      type:'POST',
-      url:'/chat/send',
-      data:{
-          username:$('#username').val(),
-          room_id:$('#room_id').val(),
-          message:$('#message').val(),
-        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      type: 'POST',
+      url: '/chat/send',
+      data: {
+        username: $('#username').val(),
+        room_id: $('#room_id').val(),
+        message: $('#message').val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
       },
-      success: function(data){
-         //alert(data)
+      success: function (data) {
+        //alert(data)
       }
     });
     document.getElementById('message').value = ''
   });
 
 </script>
+
 </html>
 
 {% comment %} for (var key in newmsg)
-    {   
-      if (newmsg[key].user==='admin'){
-        var temp="<div class='container darker'>"+newmsg[key].user+"<span class='time-left'>"+newmsg[key].date+"</span>"+"<p>"+newmsg[key].value+"</p></div>";
-        $("#display").append(temp);}
-      else {
-        var temp="<div class='container darker'>"+newmsg[key].user+"<span class='time-left'>"+newmsg[key].date+"</span>"+"<p>"+newmsg[key].value+"</p></div>";
-        $("#display2").append(temp);}
-      } {% endcomment %}
+{
+if (newmsg[key].user==='admin'){
+var temp="<div class='container darker'>"+newmsg[key].user+"<span class='time-left'>"+newmsg[key].date+"</span>"+"<p>
+    "+newmsg[key].value+"</p>
+</div>";
+$("#display").append(temp);}
+else {
+var temp="<div class='container darker'>"+newmsg[key].user+"<span class='time-left'>"+newmsg[key].date+"</span>"+"<p>
+    "+newmsg[key].value+"</p>
+</div>";
+$("#display2").append(temp);}
+} {% endcomment %}

@@ -10,8 +10,11 @@ def home(request):
     # if request.user.is_authenticated():
     #     username = request.user.username
     user = request.user 
-    print(user)
-    return render(request, 'home.html', {'user':user})
+    print(user, type(user))
+    admin=False
+    if str(user)=='admin':
+        admin=True
+    return render(request, 'home.html', {'user':user, 'admin_state':admin})
 
 @login_required
 def room(request, room):
@@ -54,12 +57,12 @@ def getMessages(request, room):
     user = request.user
     
     user_list=get_all_logged_in_users()
-    print(user_list)
+    # print(user_list)
     users=[]
     for i in user_list:
         users.append(str(i))
-    print(users)
-    print(str(user))
+    # print(users)
+    # print(str(user))
     if "admin" in users and str(user) in users: 
         online='Online'
         if str(user)=='admin':
@@ -67,6 +70,7 @@ def getMessages(request, room):
     else:
         online='Offline'
 
-        
+    # print(list(messages.values())[-3:])
+
     return JsonResponse({"messages":list(messages.values()), 'online':online})
 
