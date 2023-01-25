@@ -30,28 +30,6 @@ TemplateMo 574 Mexant
 https://templatemo.com/tm-574-mexant
 
 -->
-<style>
-
-  #tooltip #tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: gray;
-    color: #fff;
-    text-align: left;
-    border-radius: 6px;
-    padding: 5px 0;
-  
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-  }
-  
-  #tooltip:hover #tooltiptext {
-    visibility: visible;
-    font-size: 10px;
-  }
-
-</style>
 </head>
 
 <body>
@@ -212,23 +190,22 @@ https://templatemo.com/tm-574-mexant
         <div class="col-lg-6">
           <div class="service-item">
             <i class="fas fa-archway"></i>
-            <h4 >Suggest your idea</h4>
+            <h4>Fast Customer Support</h4>
             <p>Do not be hesitated to contact us. if you have any question or concern about our templates.
               I will provide good condition for you. You can discuss here with me and input your words what you want. I
-              am ready for you all the time. Your words will display below.you want. I am ready for you all the time. Your words will display below.
-              Culpa minus quod non nam, architecto assumenda inventore? Accusantium similique vero reprehenderit omnis perferendis at dignissimos recusandae veniam perspiciatis. Tempore minima eius ipsa quisquam architecto qui tempora repudiandae magnam fuga eos? Necessitatibus sed incidunt architecto quibusdam, aspernatur optio id accusantium aut accusamus fugit error labore, eaque suscipit molestias, placeat optio quidem commodi amet quasi sed error iusto debitis quas voluptate.
-            <div id="display">
-            </div>
+              am ready for you all the time. Your words will display below.
+            </p>
+            <p>{% lorem 1 b random %}</P>
+              <p sytle='padding-left:0%' id="display"></p>
             
           </div>
         </div>
         <div class="col-lg-6">
           <div class="service-item">
             <i class="fas fa-puzzle-piece"></i>
-            <h4 id="tooltip">Fully Customizable<span id="tooltiptext">Tooltip text</span></h4>
+            <h4>Fully Customizable</h4>
             <p>If you have any idea or suggestion about new business, feel free to let us know.
-              I will offer you good conditions. Everything is upto your descision. You can see your words hovering here.
-              Culpa minus quod non nam, architecto assumenda inventore? Accusantium similique vero reprehenderit omnis perferendis at dignissimos recusandae veniam perspiciatis. Tempore minima eius ipsa quisquam architecto qui tempora repudiandae magnam fuga eos? Necessitatibus sed incidunt architecto quibusdam, aspernatur optio id accusantium aut accusamus fugit error labore, eaque suscipit molestias, placeat optio quidem commodi amet quasi sed error iusto debitis quas voluptate.
+              I will offer you good conditions. Everything is upto your descision. You can see my words below.
             <div id="display-admin">
             </div>
             </p>
@@ -639,40 +616,26 @@ https://templatemo.com/tm-574-mexant
           // console.log(response.messages);
           var msg = response.messages
 
-          var newmsg = msg.splice(msg.length - 10, msg.length - 1)
+          var newmsg = msg.splice(msg.length - 5, msg.length - 1)
           console.log(newmsg)
 
           count++;
           console.log(count)
 
           $("#display-admin").empty();
-          Object.keys(newmsg).forEach(function(key) {
-            if (newmsg[key].user === 'admin') {
-              var temp = newmsg[key].user + ": " + newmsg[key].value;
-              $("#display-admin").text(temp);
-            }
-            //break;
-          });
-
-          $("#tooltiptext").empty();
           for (var key in newmsg) {
             if (newmsg[key].user === 'admin') {
               var temp = "<div class='container darker'>" + newmsg[key].user + ": " + newmsg[key].value + "</div>";
-              $("#tooltiptext").append(temp);
+              $("#display-admin").append(temp);
             }
           }
-
-
-          $("#display").empty();          
-          Object.keys(newmsg).forEach(function(key) {
+          $("#display").empty();
+          for (var key in newmsg) {
             if (newmsg[key].user !== 'admin') {
-              var temp = newmsg[key].user + ": " + newmsg[key].value;
-              $("#display").text(temp);
+              var temp = "<div class='container darker'>" + newmsg[key].user + ": " + newmsg[key].value + "</div>";
+              $("#display").append(temp);
             }
-            //break;
-          });
-          
-          
+          }
 
           $("#display-state").empty();
           {

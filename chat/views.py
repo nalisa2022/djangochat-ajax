@@ -22,7 +22,11 @@ def room(request, room):
     username = request.GET.get('username')
     
     room_details = Room.objects.get(name=room)
-    return render(request, 'room.html', {
+    if username=='admin':
+        room_template='room1.html'
+    else:
+        room_template='room.html'
+    return render(request, room_template, {
         'username': username,
         'room': room,
         'room_details': room_details
