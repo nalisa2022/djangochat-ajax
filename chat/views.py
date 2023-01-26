@@ -14,7 +14,10 @@ def home(request):
     admin=False
     if str(user)=='admin':
         admin=True
-    return render(request, 'home.html', {'user':user, 'admin_state':admin})
+        rooms = Room.objects.all()
+        return render(request, 'rooms.html', {'rooms': rooms, 'user':user,})
+    else:
+        return render(request, 'home.html', {'user':user, 'admin_state':admin})    
 
 @login_required
 def room(request, room):

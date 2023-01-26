@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Rooms | {% endblock %}
+
+{% block content %}
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">Rooms</h1>
+</div>
+
+<div>
+    {% for room in rooms %}
+
+        <li style='margin-left: 20px; font-size:20px;'><a href="/chat/{{ room.name }}/?username={{user}}">{{room.name}}</a></li><br>
+   
+    {% endfor %}
+</div>
+{% endblock %}
